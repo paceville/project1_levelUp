@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="CalculatorSubDivTestsSuite">
+    <test name="CalculatorSubDivTests">
+        <classes>
+            <class name="homework2.task1.SubTest"/>
+            <class name="homework2.task1.DivTest"/>
+        </classes>
+    </test>
+</suite>

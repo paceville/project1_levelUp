@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- глобальное название компании / проекта /группы проектов, с которыми планируем работать -->
+    <groupId>org.testProject</groupId>
+
+    <!-- модуль, который относится к нашей groupId -->
+    <artifactId>elenaBogacheva-levelUP-autumn2021</artifactId>
+
+    <!-- версия нашего модуля / программного продукта, с которой сейчас работаем -->
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- свойства проекта  -->
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <suite.root.directory>${project.basedir}/src/test/resources/suits</suite.root.directory>
+
+        <jupiter.version>5.4.0</jupiter.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <checkstyle.version>9.1</checkstyle.version>
+        <selenium-java.version>4.0.0</selenium-java.version>
+        <assertj-core.version>3.21.0</assertj-core.version>
+        <webdrivermanager.version>5.0.3</webdrivermanager.version>
+        <aspectj.version>1.9.7</aspectj.version>
+
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>calculator-all-tests</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <properties>
+                <suite.xml.name>/CalculatorAllTestsSuite.xml</suite.xml.name>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>calculator-other-functions-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <suite.xml.name>/CalculatorOtherFunctionsSuite.xml</suite.xml.name>
+            </properties>
+        </profile>
+    </profiles>
+
+    <!-- зависимости для подключения библиотек -->
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-engine</artifactId>-->
+<!--            <version>${jupiter.version}</version>-->
+<!--            <scope>test-->
+<!--            </scope>  &lt;!&ndash; зона видимости - где будет доступна6 сейчас доступна только в зоне тестирования - доступна для всех файлов в папоч ке test &ndash;&gt;-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-params</artifactId>-->
+<!--            <version>${jupiter.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- библиотека для работы с вводом / выводом -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <!-- Selenium -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium-java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- AssertJ -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>src.test.java.homework2</groupId>
+            <artifactId>calculator</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/calculator-1.0.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--  -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>  <!-- чтобы жестко задать кодировку -->
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suite.root.directory}/${suite.xml.name}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>
